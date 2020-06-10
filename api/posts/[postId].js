@@ -1,5 +1,6 @@
 import dbConnect from "../../utils/dbConnect";
 import Post from "../../model/Post";
+import { getPost, updatePost, deletePost } from "../../controller/posts";
 
 export default async function handler(req, res) {
   const {
@@ -11,39 +12,42 @@ export default async function handler(req, res) {
 
   switch (method) {
     case "GET" /* Get a model by its ID */:
-      try {
-        const post = await Post.findById(postId);
-        if (!post) {
-          return res.status(400).json({ success: false });
-        }
-        res.status(200).json({ success: true, data: post });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
+      getPost(res);
+      // try {
+      //   const post = await Post.findById(postId);
+      //   if (!post) {
+      //     return res.status(400).json({ success: false });
+      //   }
+      //   res.status(200).json({ success: true, data: post });
+      // } catch (error) {
+      //   res.status(400).json({ success: false });
+      // }
       break;
 
     case "PUT" /* Edit a model by its ID */:
-      try {
-        const post = await Post.findByIdAndUpdate(postId, req.body);
-        if (!post) {
-          return res.status(400).json({ success: false });
-        }
-        res.status(200).json({ success: true, data: post });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
+      updatePost(req, res);
+      // try {
+      //   const post = await Post.findByIdAndUpdate(postId, req.body);
+      //   if (!post) {
+      //     return res.status(400).json({ success: false });
+      //   }
+      //   res.status(200).json({ success: true, data: post });
+      // } catch (error) {
+      //   res.status(400).json({ success: false });
+      // }
       break;
 
     case "DELETE" /* Delete a model by its ID */:
-      try {
-        const deletedPost = await Post.deleteOne({ _id: postId });
-        if (!deletedPost) {
-          return res.status(400).json({ success: false });
-        }
-        res.status(200).json({ success: true, data: {} });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
+      deletePost(res);
+      // try {
+      //   const deletedPost = await Post.deleteOne({ _id: postId });
+      //   if (!deletedPost) {
+      //     return res.status(400).json({ success: false });
+      //   }
+      //   res.status(200).json({ success: true, data: {} });
+      // } catch (error) {
+      //   res.status(400).json({ success: false });
+      // }
       break;
 
     default:
